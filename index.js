@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    //get access to email, password, passwordConfirmation
+    //get access to email, password, Confirmation
     console.log(req.body);
     res.send('Account created');
 });
