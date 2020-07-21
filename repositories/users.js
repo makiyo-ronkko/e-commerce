@@ -10,14 +10,23 @@ class UsersRepositories {
         //fs.accessSync (no callback) check if a file exits
         try {
             fs.accessSync(this.filename);
-        } catch (err) {
+        } catch (err) {// if no file, create an array
             fs.writeFileSync(this.filename, '[]');
         }
     }
 
-    async checkForFile() {
-
+    async getAll() {
+        // Open the file called this.filename
+        // Parse the contents // save as JSON data
+        // Return the parsed data
+        return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
     }
 }
 
-const repo = new UsersRepositories('users.json');
+const test = async () => {
+    const repo = new UsersRepositories('users.json');
+    const users = await repo.getAll();
+    console.log(users);
+}
+
+test();
