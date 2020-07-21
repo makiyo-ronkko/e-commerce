@@ -71,3 +71,9 @@ Without Express Middleware
         next();
     }
 }; */
+
+/* app.post('/', bodyParser.urlencoded({ extended: true }), (req, res) => {
+    //get access to email, password, Confirmation
+    console.log(req.body);
+    res.send('Account created');
+}); */
