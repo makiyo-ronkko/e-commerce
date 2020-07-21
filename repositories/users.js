@@ -25,8 +25,13 @@ class UsersRepositories {
         //{email: 'asdas@email.com', password: 'asdasad'}
         const records = await this.getAll();// get a list
         records.push(attributes);// add new user
+
+        await this.writeAll(records);
+    }
+    //helper method
+    async writeAll(records) {
         // write the updated 'record' array back to this.filename
-        await fs.promises.writeFile(this.filename, JSON.stringify(records));
+        await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2)); // null =no customization for json format, 2 spaces
     }
 }
 
