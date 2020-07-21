@@ -1,4 +1,5 @@
 const fs = require('fs');
+const crypto = require('crypto');
 
 // async function is not allowed in constructor
 class UsersRepositories {
@@ -22,16 +23,23 @@ class UsersRepositories {
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
     }
     async create(attributes) {
+
+        attributes.id = this.randomId();
+
         //{email: 'asdas@email.com', password: 'asdasad'}
         const records = await this.getAll();// get a list
         records.push(attributes);// add new user
-
         await this.writeAll(records);
     }
     //helper method
     async writeAll(records) {
         // write the updated 'record' array back to this.filename
         await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2)); // null =no customization for json format, 2 spaces
+    }
+    randomId() {
+        //Crypto(Cryptocurrency)
+        // return Buffer
+        return crypto.randomBytes(4).toString('hex');
     }
 }
 
