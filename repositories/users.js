@@ -17,14 +17,24 @@ class UsersRepositories {
 
     async getAll() {
         // Open the file called this.filename
-        // Parse the contents // save as JSON data
+        // Parse the contents and save as JSON data
         // Return the parsed data
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
+    }
+    async create(attributes) {
+        //{email: 'asdas@email.com', password: 'asdasad'}
+        const records = await this.getAll();// get a list
+        records.push(attributes);// add new user
+        // write the updated 'record' array back to this.filename
+        await fs.promises.writeFile(this.filename, JSON.stringify(records));
     }
 }
 
 const test = async () => {
     const repo = new UsersRepositories('users.json');
+
+    await repo.create({ email: 'test@test.com', password: 'password' })
+
     const users = await repo.getAll();
     console.log(users);
 }
