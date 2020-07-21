@@ -79,7 +79,27 @@ class UsersRepositories {
     }
 }
 
-const test = async () => {
+module.exports = new UsersRepositories('users.json');
+
+//ANOTHER FILE
+// const repo= require('./users');
+// repo.getAll();
+// repo.getOne();
+
+
+/* module.exports = UsersRepositories;
+
+//ANOTHER FILE
+const UsersRepositories = require('./users');
+const repo = new UsersRepositories('users.json');
+
+// YET ANOTHER FILE....
+const UsersRepositories = require('./users');
+const repo = new UsersRepositories('user.json'); //typo */
+
+
+
+/* const test = async () => {
     const repo = new UsersRepositories('users.json');
 
     //await repo.delete('5d60341c');
@@ -94,4 +114,4 @@ const test = async () => {
     console.log(user);
 }
 
-test();
+test(); */
