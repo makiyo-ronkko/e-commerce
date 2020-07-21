@@ -41,10 +41,14 @@ class UsersRepositories {
         // return Buffer
         return crypto.randomBytes(4).toString('hex');
     }
-
     async getOne(id) {
         const records = await this.getAll();
         return records.find(record => record.id === id);
+    }
+    async delete(id) {
+        const records = await this.getAll();
+        const filteredRecords = records.filter(record => record.id !== id);// return true
+        await this.writeAll(filteredRecords);
     }
 
 }
@@ -52,12 +56,13 @@ class UsersRepositories {
 const test = async () => {
     const repo = new UsersRepositories('users.json');
 
-    const user = await repo.getOne('5de6b3c4');
+    await repo.delete('5d60341c');
+    //const user = await repo.getOne('5de6b3c4');
     // await repo.create({ email: 'test@test.com', password: 'password' })
 
     // const users = await repo.getAll();
 
-    console.log(user);
+    //console.log(user);
 }
 
 test();
