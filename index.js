@@ -17,8 +17,9 @@ app.use(cookieSession({ // pass config object
 }));
 
 // root router
-app.get('/', (req, res) => {
+app.get('/signup', (req, res) => {
     // name property indicates what to call in each input
+
     res.send(`
     <div>
     Your id is: ${req.session.userId}
@@ -33,7 +34,7 @@ app.get('/', (req, res) => {
 
 });
 
-app.post('/', async (req, res) => {//cookieSession to req
+app.post('/signup', async (req, res) => {//cookieSession to req
     //get access to email, password, Confirmation
     //console.log(req.body);// form inputs
     const { email, password, passwordConfirmation } = req.body;
@@ -52,9 +53,30 @@ app.post('/', async (req, res) => {//cookieSession to req
     // Store the id of that user inside the users cookie
     // req.session === {} added by cookie session
     // userId can be any name
-    req.session.userId === user.id; //encrypted(暗号化)
+    req.session.userId = user.id; //encrypted(暗号化)
 
-    res.send(`Account created with id: ${user.id}`);
+    res.send('Account created!');
+});
+
+app.get('/signout', (req, res) => {
+    req.session = null;
+    res.send('You are logged out');
+});
+
+app.get('/signin', (req, res) => {
+    res.send(`
+    <div>
+      <form method="POST">
+        <input name="email" placeholder="email" />
+        <input name="password" placeholder="password" />
+        <button>Sign In</button>
+      </form>
+    </div>
+`);
+});
+
+app.post('/signin', async (req, res) => {
+
 });
 
 app.listen(3000, () => {

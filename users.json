@@ -1,20 +1,12 @@
 [
   {
-    "email": "test@test.com"
-  },
-  {
-    "email": "asdasdafsa@gmail.com",
+    "email": "test@test.com",
     "password": "12345",
-    "id": "031aeb2a"
+    "id": "f3432f04"
   },
   {
     "email": "test@gmail.com",
     "password": "test",
-    "id": "7e4d9878"
-  },
-  {
-    "email": "test@testtest.com",
-    "password": "fds",
-    "id": "6c0af394"
+    "id": "c5423eff"
   }
 ]
