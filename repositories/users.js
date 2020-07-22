@@ -30,6 +30,8 @@ class UsersRepositories {
         const records = await this.getAll();// get a list
         records.push(attributes);// add new user
         await this.writeAll(records);
+
+        return attributes;// to get object which contains id
     }
     //helper method
     async writeAll(records) {

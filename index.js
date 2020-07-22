@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
 const usersRepo = require('./repositories/users');
 
 const app = express();
@@ -8,11 +9,19 @@ const app = express();
 // Automatically detect if bodyParse requred and apply
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// wire up cookieSession
+// keys random charactors and encrypted(暗号化)
+// adding extra object to req as argument
+app.use(cookieSession({ // pass config object
+    keys: ['catsdogs']
+}));
+
 // root router
 app.get('/', (req, res) => {
     // name property indicates what to call in each input
     res.send(`
     <div>
+    Your id is: ${req.session.userId}
       <form method="POST">
         <input name="email" placeholder="email" />
         <input name="password" placeholder="password" />
@@ -21,9 +30,10 @@ app.get('/', (req, res) => {
       </form>
     </div>
     `);
+
 });
 
-app.post('/', async (req, res) => {
+app.post('/', async (req, res) => {//cookieSession to req
     //get access to email, password, Confirmation
     //console.log(req.body);// form inputs
     const { email, password, passwordConfirmation } = req.body;
@@ -36,7 +46,15 @@ app.post('/', async (req, res) => {
         return res.send('Password must match');
     }
 
-    res.send('Account created');
+    //Create a user in our user repo to represent this person
+    const user = await usersRepo.create({ email, password });
+
+    // Store the id of that user inside the users cookie
+    // req.session === {} added by cookie session
+    // userId can be any name
+    req.session.userId === user.id; //encrypted(暗号化)
+
+    res.send(`Account created with id: ${user.id}`);
 });
 
 app.listen(3000, () => {
