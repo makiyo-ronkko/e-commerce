@@ -34,7 +34,7 @@ class UsersRepositories {
         // salt random series of numbers and characters
         const salt = crypto.randomBytes(8).toString('hex');
         // promise scrypt = util.promisify(crypto.scrypt)
-        const buffer = await scrypt(attributes.password, salt, 64);
+        const buffer = await scrypt(attributes.password, salt, 64); // callback is deriveKey<Buffer> which is a raw array 
 
         //{email: 'asdas@email.com', password: 'asdasad'}
         const records = await this.getAll();// get a list
@@ -56,7 +56,20 @@ class UsersRepositories {
         // hashed is hashed password
         //buffer.toString('hex');
         // hased password with salt stored in DB
+    }
 
+    async comparePasswords(saved, supplied) {
+        // Saved => password saved in our database. 'hashed.salt'
+        // Supplied => password given to us by a user to sign in
+
+        /* const result = saved.split('.');
+        const hashed = result[0];
+        const salt = result[1]; */
+        const [hashed, salt] = saved.split('.');
+        const hashedSuppliedBuffer = await scrypt(supplied, salt, 64); // callback is deriveKey<Buffer>
+
+        // hashedSuppliedBuffer is buffer
+        return hashed === hashedSuppliedBuffer.toString('hex');
     }
 
     //helper method
