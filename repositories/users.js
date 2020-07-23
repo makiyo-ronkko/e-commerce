@@ -1,5 +1,10 @@
 const fs = require('fs');
 const crypto = require('crypto');
+// util libary to apply util.promisify
+const util = require('util');
+
+// scrypt returns to promise based function
+const scrypt = util.promisify(crypto.scrypt);
 
 // async function is not allowed in constructor
 class UsersRepositories {
@@ -23,16 +28,37 @@ class UsersRepositories {
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
     }
     async create(attributes) {
-
+        // atttributes === {email: '', password: ''}
         attributes.id = this.randomId();
+
+        // salt random series of numbers and characters
+        const salt = crypto.randomBytes(8).toString('hex');
+        // promise scrypt = util.promisify(crypto.scrypt)
+        const buffer = await scrypt(attributes.password, salt, 64);
 
         //{email: 'asdas@email.com', password: 'asdasad'}
         const records = await this.getAll();// get a list
-        records.push(attributes);// add new user
+
+        //records.push(attributes);// add new user
+        const record = ({
+            ...attributes,
+            password: `${buffer.toString('hex')}.${salt}`
+            //overwriting attributes with new password
+        });
+        records.push(record);
+
         await this.writeAll(records);
 
-        return attributes;// to get object which contains id
+        // to get object which contains id
+        //return attributes;
+        return record;
+
+        // hashed is hashed password
+        //buffer.toString('hex');
+        // hased password with salt stored in DB
+
     }
+
     //helper method
     async writeAll(records) {
         // write the updated 'record' array back to this.filename
