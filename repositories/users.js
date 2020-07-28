@@ -7,7 +7,7 @@ const util = require('util');
 const scrypt = util.promisify(crypto.scrypt);
 
 // async function is not allowed in constructor
-class UsersRepositories {
+class UsersRepository {
     constructor(filename) {
         if (!filename) {
             throw new Error('Creating a repository requires a filename')
@@ -40,11 +40,11 @@ class UsersRepositories {
         const records = await this.getAll();// get a list
 
         //records.push(attributes);// add new user
-        const record = ({
+        const record = {
             ...attributes,
             password: `${buffer.toString('hex')}.${salt}`
             //overwriting attributes with new password
-        });
+        };
         records.push(record);
 
         await this.writeAll(records);
@@ -120,7 +120,7 @@ class UsersRepositories {
     }
 }
 
-module.exports = new UsersRepositories('users.json');
+module.exports = new UsersRepository('users.json');
 
 //ANOTHER FILE
 // const repo= require('./users');
