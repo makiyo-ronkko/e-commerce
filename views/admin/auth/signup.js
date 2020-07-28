@@ -1,6 +1,7 @@
 const layout = require('../layout');
+const { getError } = require('../../helpers');
 
-const getError = (errors, prop) => {
+/* const getError = (errors, prop) => {
     // prop === 'email' || 'password' || 'passwordConfirmation'
     try {
         // return errors array into object
@@ -13,7 +14,7 @@ const getError = (errors, prop) => {
     } catch (err) {
         return '';
     }
-};
+}; */
 // errors: [
 //     {
 //       value: '123456',
