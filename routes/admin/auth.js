@@ -14,7 +14,7 @@ const router = express.Router();
 // root router
 router.get('/signup', (req, res) => {
     // name property indicates what to call in each input
-    res.send(signupTemplate({ req: req }));
+    res.send(signupTemplate({ req }));
 });
 
 // 2nd argument is validator
@@ -48,6 +48,8 @@ router.post('/signup', [
         //Create a user in our user repo to represent this person
         const user = await usersRepo.create({ email, password });
 
+        console.log(user);
+
         // Store the id of that user inside the users cookie
         // req.session === {} added by cookie session
         // userId can be any name
@@ -62,7 +64,7 @@ router.get('/signout', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-    res.send(signinTemplate());
+    res.send(signinTemplate({}));
 });
 
 router.post('/signin', [
@@ -71,7 +73,10 @@ router.post('/signin', [
 ],
     async (req, res) => {
         const errors = validationResult(req);
-        console.log(errors);
+        //console.log(errors);
+        if (!errors.isEmpty()) {
+            return res.send(signinTemplate({ errors }));
+        }
 
         const { email } = req.body;
 
