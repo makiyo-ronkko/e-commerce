@@ -1,7 +1,12 @@
 const express = require('express');
+// only user check function from express-validator
+// const expressValidator = require('express-validator);
+// expressValidator.check();
+const { check, validationResult } = require('express-validator');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const { requireEmail, requirePassword, requirePasswordConfirmation } = require('./validators');
 
 // sub-router 'router' object links up with app in index.js
 const router = express.Router();
@@ -12,29 +17,39 @@ router.get('/signup', (req, res) => {
     res.send(signupTemplate({ req: req }));
 });
 
-router.post('/signup', async (req, res) => {//cookieSession to req
-    //get access to email, password, Confirmation
-    //console.log(req.body);// form inputs
-    const { email, password, passwordConfirmation } = req.body;
+// 2nd argument is validator
+router.post('/signup', [
+    requireEmail,
+    requirePassword,
+    requirePasswordConfirmation
+],
+    async (req, res) => {
+        // validation steps into validationResult function
+        const errors = validationResult(req);
+        console.log(errors);
+        //cookieSession to req
+        //get access to email, password, Confirmation
+        //console.log(req.body);// form inputs
+        const { email, password, passwordConfirmation } = req.body;
 
-    const existingUser = await usersRepo.getOneBy({ email: email });
-    if (existingUser) {
-        return res.send('Email in use');
-    }
-    if (password !== passwordConfirmation) {
-        return res.send('Password must match');
-    }
+        // const existingUser = await usersRepo.getOneBy({ email: email });
+        // if (existingUser) {
+        //     return res.send('Email in use');
+        // }
+        // if (password !== passwordConfirmation) {
+        //     return res.send('Password must match');
+        // }
 
-    //Create a user in our user repo to represent this person
-    const user = await usersRepo.create({ email, password });
+        //Create a user in our user repo to represent this person
+        const user = await usersRepo.create({ email, password });
 
-    // Store the id of that user inside the users cookie
-    // req.session === {} added by cookie session
-    // userId can be any name
-    req.session.userId = user.id; //encrypted(暗号化)
+        // Store the id of that user inside the users cookie
+        // req.session === {} added by cookie session
+        // userId can be any name
+        req.session.userId = user.id; //encrypted(暗号化)
 
-    res.send('Account created!');
-});
+        res.send('Account created!');
+    });
 
 router.get('/signout', (req, res) => {
     req.session = null;
