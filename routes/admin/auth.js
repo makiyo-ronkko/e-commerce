@@ -1,5 +1,6 @@
 const express = require('express');
 const usersRepo = require('../../repositories/users');
+const signupTemplate = require('../../views/admin/auth/signup');
 
 // sub-router 'router' object links up with app in index.js
 const router = express.Router();
@@ -7,19 +8,7 @@ const router = express.Router();
 // root router
 router.get('/signup', (req, res) => {
     // name property indicates what to call in each input
-
-    res.send(`
-    <div>
-    Your id is: ${req.session.userId}
-      <form method="POST">
-        <input name="email" placeholder="email" />
-        <input name="password" placeholder="password" />
-        <input name="passwordConfirmation" placeholder="password confirmation" />
-        <button>Sign up</button>
-      </form>
-    </div>
-    `);
-
+    res.send(signupTemplate({ req: req }));
 });
 
 router.post('/signup', async (req, res) => {//cookieSession to req
