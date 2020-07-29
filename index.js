@@ -6,6 +6,8 @@ const authRouter = require('./routes/admin/auth');
 
 const app = express();
 
+// tell express to look at public folder and open to public
+app.use(express.static('public'));
 
 // urlencoded to handle html form
 // Automatically detect if bodyParse requred and apply
