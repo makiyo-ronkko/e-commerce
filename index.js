@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 // const usersRepo = require('./repositories/users');
 const authRouter = require('./routes/admin/auth');
+const productsRouter = require('./routes/admin/products');
 
 const app = express();
 
@@ -20,7 +21,9 @@ app.use(cookieSession({ // pass config object
     keys: ['catsdogs']
 }));
 
+//wire up routers
 app.use(authRouter);
+app.use(productsRouter);
 
 app.listen(3000, () => {
     console.log('Listening...');
