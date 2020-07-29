@@ -1,8 +1,21 @@
 const { check } = require('express-validator');
 const usersRepo = require('../../repositories/users');
+const productsRepo = require('../../repositories/products');
 
 // .isEmail() no need to pass req.body.email but express does 
 module.exports = {
+    // productsRepo
+    requireTitle: check('title')// name from form
+        .trim()
+        .isLength({ min: 5, max: 40 })
+        .withMessage('Must be between 5 and 40 characters'),
+    requirePrice: check('price')
+        .trim()
+        .toFloat()// take a string and extract to number (toInt)
+        .isFloat({ min: 1 })
+        .withMessage('Must be a number greater than 1'),
+
+    // usersRepo
     requireEmail: check('email')
         .trim()
         .normalizeEmail()

@@ -25,6 +25,7 @@ router.post('/signup', [
 ],
     async (req, res) => {
         // validation steps into validationResult function
+        // validationResult from express-validator library
         const errors = validationResult(req);
         //console.log(errors);
 
