@@ -7,6 +7,7 @@ router.get('/admin/products', (req, res) => {
 
 });
 
+// create a new product
 router.get('/admin/products/new', (req, res) => {
 
 });
