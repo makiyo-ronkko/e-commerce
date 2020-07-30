@@ -3,7 +3,7 @@ const express = require('express');
 const multer = require('multer');
 
 // import middleware of validationResult
-const { handleErrors } = require('./middlewares');
+const { handleErrors, requireAuth } = require('./middlewares');
 const productsRepo = require('../../repositories/products');
 const productsNewTemplate = require('../../views/admin/products/new');
 const productsIndexTemplate = require('../../views/admin/products/index');
@@ -13,20 +13,24 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 // list out products via administrator view
-router.get('/admin/products', async (req, res) => {
+router.get('/admin/products', requireAuth, async (req, res) => {
+    // replaced by middleware(requireAuth)
+    // if (!req.session.userId) {
+    //     return res.redirect('/signin');
+    // }
     const products = await productsRepo.getAll();
     res.send(productsIndexTemplate({ products }));
 });
 
 // create a new product
-router.get('/admin/products/new', (req, res) => {
+router.get('/admin/products/new', requireAuth, (req, res) => {
     res.send(productsNewTemplate({
 
     }));
 });
 
 // product submission
-router.post('/admin/products/new', upload.single('image'), [requireTitle, requirePrice], handleErrors(productsNewTemplate), async (req, res) => {// multer middleware: upload.single('image')
+router.post('/admin/products/new', requireAuth, upload.single('image'), [requireTitle, requirePrice], handleErrors(productsNewTemplate), async (req, res) => {// multer middleware: upload.single('image')
 
     // *replaced by handleErrors 
     // express-validator error check

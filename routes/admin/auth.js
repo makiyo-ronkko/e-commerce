@@ -62,7 +62,7 @@ router.post('/signup', [
     });
 
 router.get('/signout', (req, res) => {
-    req.session = null;
+    req.session = null; //remove cokkie session
     res.send('You are logged out');
 });
 
