@@ -1,7 +1,9 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
+//const { validationResult } = require('express-validator');
 const multer = require('multer');
 
+// import middleware of validationResult
+const { handleErrors } = require('./middlewares');
 const productsRepo = require('../../repositories/products');
 const productsNewTemplate = require('../../views/admin/products/new');
 const { requireTitle, requirePrice } = require('./validators');
@@ -22,12 +24,14 @@ router.get('/admin/products/new', (req, res) => {
 });
 
 // product submission
-router.post('/admin/products/new', upload.single('image'), [requireTitle, requirePrice], async (req, res) => {// multer middleware: upload.single('image')
+router.post('/admin/products/new', upload.single('image'), [requireTitle, requirePrice], handleErrors(productsNewTemplate), async (req, res) => {// multer middleware: upload.single('image')
+
+    // *replaced by handleErrors 
     // express-validator error check
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.send(productsNewTemplate({ errors }));
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.send(productsNewTemplate({ errors }));
+    // }
 
     //console.log(errors);
     //console.log(req.body);

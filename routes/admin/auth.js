@@ -2,7 +2,9 @@ const express = require('express');
 // only user check function from express-validator
 // const expressValidator = require('express-validator);
 // expressValidator.check();
-const { check, validationResult } = require('express-validator');
+//const { check, validationResult } = require('express-validator');
+
+const { handleErrors } = require('./middlewares');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
@@ -22,16 +24,16 @@ router.post('/signup', [
     requireEmail,
     requirePassword,
     requirePasswordConfirmation
-],
+], handleErrors(signupTemplate),
     async (req, res) => {
         // validation steps into validationResult function
         // validationResult from express-validator library
-        const errors = validationResult(req);
+        /* const errors = validationResult(req);
         //console.log(errors);
 
         if (!errors.isEmpty()) {// if error is not empty
             return res.send(signupTemplate({ req, errors }));
-        }
+        } */
 
         //cookieSession to req
         //get access to email, password, Confirmation
@@ -71,13 +73,13 @@ router.get('/signin', (req, res) => {
 router.post('/signin', [
     requireEmailExists,
     requireValidPasswordForUser
-],
+], handleErrors(signinTemplate),
     async (req, res) => {
-        const errors = validationResult(req);
+        /* const errors = validationResult(req);
         //console.log(errors);
         if (!errors.isEmpty()) {
             return res.send(signinTemplate({ errors }));
-        }
+        } */
 
         const { email } = req.body;
 
