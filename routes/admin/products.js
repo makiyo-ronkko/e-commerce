@@ -44,7 +44,7 @@ router.post('/admin/products/new', upload.single('image'), [requireTitle, requir
 
     await productsRepo.create({ title, price, image });
 
-    res.send('submitted');
+    res.redirect('/admin/products');
 });
 
 module.exports = router;
