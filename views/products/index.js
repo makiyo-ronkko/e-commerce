@@ -30,6 +30,7 @@ module.exports = ({ products }) => {
   // form submit to the end point
   // OR
   // <input hidden value="${product.id}" name="productId" />
+  // add product.id to the cart
 
   return layout({
     content: `
