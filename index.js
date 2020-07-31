@@ -8,7 +8,7 @@ const productsRouter = require('./routes/products');
 
 const app = express();
 
-// tell express to look at public folder and open to public
+// tell express to look at public folder and open to public views
 app.use(express.static('public'));
 
 // urlencoded to handle html form

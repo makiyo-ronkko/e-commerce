@@ -2,7 +2,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 // Object Oriented Programming method
-module.exports = class REpository {
+module.exports = class Repository {
     constructor(filename) {
         if (!filename) {
             throw new Error('Creating a repository requires a filename')
@@ -31,6 +31,7 @@ module.exports = class REpository {
         // Parse the contents and save as JSON data
         // Return the parsed data
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
+        // UTF-8 is an encoding used to translate numbers into binary data.
     }
 
     //helper method

@@ -1,3 +1,7 @@
+// only check function from express-validator
+// const expressValidator = require('express-validator);
+// expressValidator.check();
+//const { check, validationResult } = require('express-validator');
 const { check } = require('express-validator');
 const usersRepo = require('../../repositories/users');
 const productsRepo = require('../../repositories/products');
