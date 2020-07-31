@@ -37,7 +37,7 @@ router.post('/cart/products', async (req, res) => {
 
     console.log(cart);
 
-    res.send('Product added to cart');
+    res.redirect('/cart');
 })
 
 // Receive a GET request to show all items in cart
@@ -57,7 +57,18 @@ router.get('/cart', async (req, res) => {
     }
     res.send(cartShowTemplate({ items: cart.items }));
 });
-// Receive a post request to delete an item from a cart
 
+// Receive a post request to delete an item from a cart
+router.post('/cart/products/delete', async (req, res) => {
+    //console.log(req.body.itemId);
+    const { itemId } = req.body;
+    const cart = await cartsRepo.getOne(req.session.cartId);
+    // return boolean, true
+    const items = cart.items.filter(item => item.id !== itemId);// item.id is from we're iterating over, itemID is from req.body
+    await cartsRepo.update(req.session.cartId, { items });
+
+    // respond to user
+    res.redirect('/cart');
+});
 
 module.exports = router;
