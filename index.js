@@ -8,6 +8,7 @@ const productsRouter = require('./routes/products');
 const cartsRouter = require('./routes/carts');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // tell express to look at public folder and open to public views
 app.use(express.static('public'));
@@ -30,7 +31,7 @@ app.use(productsRouter);
 app.use(cartsRouter);
 
 app.listen(3000, () => {
-    console.log('Listening...');
+    console.log(`Listening on port ${port}`);
 });
 
 
