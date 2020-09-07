@@ -13,34 +13,38 @@ I have built the e-commerce app with Vanilla Javascript, Node.js and Express fol
 - Upload images
 - Shopping cart
 
+## URL
+
+App is deployed to heroku: https://mr-ecommerce-app.herokuapp.com/
+
 ## Admin Views
 
-### Registration
+### <ins>Registration</ins>
 
 ![registration](./public/signup.png?raw=true)
 
-### Login
+### <ins>Login</ins>
 
 ![login](./public/signin.png?raw=true)
 
-### Logout
+### <ins>Logout</ins>
 
 ![logout](./public/signout.png?raw=true)
 
-### New Products
+### <ins>New Products</ins>
 
 ![newproduct](./public/admin_newproduct.png?raw=true)
 
-### Product List
+### <ins>Product List</ins>
 
 ![productlist](./public/admin_productlist.png?raw=true)
 
 ## Customer Views
 
-### Homepage
+### <ins>Homepage</ins>
 
 ![homepage](./public/homepage.png?raw=true)
 
-### Shopping Cart
+### <ins>Shopping Cart</ins>
 
 ![shoppingcart](./public/shoppingcart.png?raw=true)
