@@ -15,11 +15,6 @@
     "id": "619bebe9"
   },
   {
-    "email": "test@test.com",
-    "password": "716545fb343272ccedaa45162c8179b9cbdd38114236751ac24b1c493ec499b54ae04c0b31ae7a9e9ab6242d6b9ec6acdfe324ceaf8a13bbd95fe5d8e036ab95.a7ea4200218e42e8",
-    "id": "fd64c00a"
-  },
-  {
     "email": "maki@gmail.com",
     "password": "4ae4feafcc65d7806c318a2e896ecaa976df66913ac9edf99ab3093a6994f6d171b5a909c7a60d9dbae4b2c2a61ece2d5d9ebbcd2d29e3aac17e5bc038e9bc45.809e742fb5340247",
     "id": "9aba4cae"
@@ -43,5 +38,10 @@
     "email": "makimaki@gmail.com",
     "password": "4677d049f20ad7d95fb8773cbc5b3235be9be9969e16a15ca3e326b88dcb2392cdbb4a9b9b1672c9870728deddc656beccf9698da5f9c12129800780361ec64b.c97cb60372179735",
     "id": "df07a908"
+  },
+  {
+    "email": "test@test.com",
+    "password": "0d9d2d92d1b5551da0e35fe4cd820380174f98bf5a6441eac5e4a4785441c32ca9237e1bef4b4759c19361f19167c7210027452e1bb24f49bd311040f91d539b.1ae88111076fc83a",
+    "id": "576e92f7"
   }
 ]
